@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verificación de pago | 2MINDS Summit</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#111111">
+  <link rel="icon" href="assets/ilustra-logo-vertical.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Nunito+Sans:opsz,wght@6..12,700;6..12,800;6..12,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261006-2">
+</head>
+<body class="payment-result-page">
+  <main class="payment-result-card">
+    <span class="result-brand">2MINDS · PAGO SEGURO</span>
+    <img src="assets/2minds-mascot-duo.png" alt="DÚO, mascota de 2MINDS Summit" width="1252" height="1252">
+    <p class="kicker">Respuesta recibida</p>
+    <h1>Estamos verificando tu pago</h1>
+    <p>Wompi regresó a la página de 2MINDS. La inscripción solo quedará confirmada cuando nuestro servidor valide oficialmente la transacción.</p>
+    <div class="result-reference" id="resultReference" hidden><span>Referencia de Wompi</span><strong></strong></div>
+    <p class="result-help">Si el pago fue aprobado, recibirás la confirmación por los datos registrados. Si necesitas ayuda, conserva el comprobante.</p>
+    <div class="result-actions"><a class="button" href="./#inscripcion">Volver a 2MINDS</a><a class="text-link" href="https://wa.me/573172578495?text=Hola%2C%20necesito%20ayuda%20con%20un%20pago%20de%202MINDS%20Summit." target="_blank" rel="noopener">Solicitar ayuda</a></div>
+  </main>
+  <script>
+    const transactionId = new URLSearchParams(window.location.search).get("id");
+    if (transactionId) {
+      const reference = document.querySelector("#resultReference");
+      reference.hidden = false;
+      reference.querySelector("strong").textContent = transactionId;
+    }
+  </script>
+</body>
+</html>

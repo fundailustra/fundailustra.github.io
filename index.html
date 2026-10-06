@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Nunito+Sans:opsz,wght@6..12,700;6..12,800;6..12,900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261006-1">
+  <link rel="stylesheet" href="styles.css?v=20261006-2">
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -167,9 +167,10 @@
           <label>Correo electrónico<input type="email" name="email" autocomplete="email" required placeholder="correo@ejemplo.com"></label>
           <label>WhatsApp<input type="tel" name="phone" autocomplete="tel" required placeholder="+57 300 000 0000"></label>
           <label>Edad del participante<select name="ageGroup" required><option value="">Selecciona un grupo</option><option value="11-13">11 a 13 años</option><option value="14-18">14 a 18 años</option></select></label>
+          <label id="weekField" hidden>Semana que deseas reservar<select name="weekChoice" disabled><option value="">Selecciona una semana</option><option value="semana-1">Semana 1 · 23 al 27 de noviembre</option><option value="semana-2">Semana 2 · 30 de noviembre al 4 de diciembre</option></select></label>
           <label class="consent-row"><input type="checkbox" name="adultConsent" required><span>Confirmo que soy padre, madre o representante legal y mayor de edad.</span></label>
           <button class="button checkout-button" type="submit" id="checkoutButton">Continuar al pago · $860.000</button>
-          <p class="payment-note">Antes de pagar verás nuevamente el pase y el valor. Mientras se conecta la pasarela, este botón no realizará cargos.</p><p class="form-error" id="formError" role="alert"></p>
+          <p class="payment-note">Antes de pagar verás nuevamente el pase y el valor. Esta versión abre una simulación segura de Wompi y no realiza cargos.</p><p class="form-error" id="formError" role="alert"></p>
         </form>
       </div>
     </section>
@@ -192,11 +193,29 @@
     <p>Fundación ILUSTRA · NIT 901.664.266-1<br><a href="mailto:contacto@fundacionilustra.com">contacto@fundacionilustra.com</a> · <a href="tel:+573172578495">+57 317 257 8495</a></p>
   </footer>
   <a class="floating-cta" href="#inscripcion">Inscribir ahora</a>
-  <dialog class="payment-dialog" id="paymentDialog" aria-labelledby="dialogTitle">
-    <button class="dialog-close" type="button" aria-label="Cerrar">×</button><span class="dialog-icon">✓</span><h2 id="dialogTitle">La ruta de pago está preparada</h2>
-    <p id="dialogSummary">Tu selección está lista.</p><p>La pasarela todavía no tiene un enlace de cobro conectado. Esta versión no realizará cargos ni enviará los datos escritos.</p><p><strong>Para abrir ventas falta conectar la cuenta oficial de la pasarela de Fundación ILUSTRA.</strong></p>
-    <a class="button" href="#video-faq" id="dialogGuide">Ver video de preguntas</a>
+  <dialog class="payment-dialog wompi-preview" id="paymentDialog" aria-labelledby="dialogTitle">
+    <button class="dialog-close" type="button" aria-label="Cerrar">×</button>
+    <div class="wompi-preview-main" id="wompiPreviewMain">
+      <div class="wompi-preview-head"><span class="sandbox-badge">MODO PRUEBA</span><strong>Pago seguro con <b>Wompi</b></strong></div>
+      <div class="checkout-progress" aria-label="Paso 2 de 3"><span class="done">1</span><i></i><span class="active">2</span><i></i><span>3</span></div>
+      <p class="preview-step">DATOS LISTOS · REVISA ANTES DE CONTINUAR</p>
+      <h2 id="dialogTitle">Confirma tu inscripción</h2>
+      <div class="preview-order"><span id="dialogPlan">Experiencia completa</span><strong id="dialogAmount">$860.000 COP</strong><small id="dialogBalance">Pago total · sin saldo pendiente</small></div>
+      <p class="preview-adult" id="dialogAdult">Adulto responsable</p>
+      <div class="payment-methods" aria-label="Medios de pago disponibles"><span>VISA</span><span>Mastercard</span><span>PSE</span><span>Nequi</span></div>
+      <div class="sandbox-note"><strong>Simulación segura</strong><span>No se enviarán datos ni se realizará ningún cobro. Cuando conectemos la cuenta Sandbox de ILUSTRA, aquí se abrirá el checkout oficial de Wompi.</span></div>
+      <button class="button checkout-button" type="button" id="simulatePayment">Simular pago aprobado</button>
+      <button class="preview-back" type="button" id="previewBack">Volver y cambiar la selección</button>
+    </div>
+    <div class="wompi-preview-success" id="wompiPreviewSuccess" hidden>
+      <span class="success-check">✓</span><p class="preview-step">RESULTADO DE LA SIMULACIÓN</p><h2>Pago aprobado</h2>
+      <p id="dialogSummary">Tu inscripción de prueba quedó registrada.</p>
+      <div class="test-reference"><span>Referencia de prueba</span><strong id="testReference">2MINDS-TEST</strong></div>
+      <p><strong>En la integración real, la confirmación llegará únicamente después de que el servidor reciba y valide el evento de Wompi.</strong></p>
+      <button class="button" type="button" id="restartPreview">Hacer otra prueba</button>
+    </div>
   </dialog>
-  <script src="app.js?v=20261006-1"></script>
+  <script src="payment-config.js?v=20261006-2"></script>
+  <script src="app.js?v=20261006-2"></script>
 </body>
 </html>

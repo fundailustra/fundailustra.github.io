@@ -19,6 +19,9 @@ const depositField = document.querySelector("#depositField");
 const depositInput = document.querySelector('input[name="depositAmount"]');
 const balanceText = document.querySelector("#balanceText");
 const checkoutButton = document.querySelector("#checkoutButton");
+const mascotGuide = document.querySelector(".payment-mascot-guide");
+const mascotGuideTitle = document.querySelector("#mascotGuideTitle");
+const mascotGuideText = document.querySelector("#mascotGuideText");
 
 function formatMoney(value) { return `$${money.format(value)}`; }
 function paymentAmount() { return state.paymentMode === "full" ? state.total : Number(depositInput.value || 0); }
@@ -33,6 +36,23 @@ function updateCheckout() {
   checkoutButton.textContent = state.paymentMode === "full" ? `Continuar al pago · ${formatMoney(state.total)}` : `Continuar con abono · ${formatMoney(amount)}`;
 }
 
+function updateMascotGuide(animate = true) {
+  if (state.paymentMode === "deposit") {
+    mascotGuideTitle.textContent = "Asegura el cupo con tu abono";
+    mascotGuideText.textContent = `Escribe cuánto deseas abonar desde $200.000. La página calculará el saldo de ${state.plan}.`;
+  } else if (state.plan === "2 semanas") {
+    mascotGuideTitle.textContent = "Vive la experiencia completa";
+    mascotGuideText.textContent = "Las dos semanas están seleccionadas. El pago completo deja la inscripción sin saldo pendiente.";
+  } else {
+    mascotGuideTitle.textContent = "Tu semana está seleccionada";
+    mascotGuideText.textContent = "Puedes pagar los $560.000 completos o elegir un abono para asegurar el cupo.";
+  }
+
+  if (!animate) return;
+  mascotGuide.classList.remove("is-updated");
+  requestAnimationFrame(() => mascotGuide.classList.add("is-updated"));
+}
+
 passButtons.forEach((button) => {
   button.addEventListener("click", () => {
     passButtons.forEach((item) => {
@@ -43,6 +63,7 @@ passButtons.forEach((button) => {
     state.plan = button.dataset.plan;
     state.total = Number(button.dataset.price);
     updateCheckout();
+    updateMascotGuide();
   });
 });
 
@@ -51,6 +72,7 @@ paymentRadios.forEach((radio) => {
     state.paymentMode = radio.value;
     document.querySelectorAll(".choice-card").forEach((card) => card.classList.toggle("selected", card.contains(radio)));
     updateCheckout();
+    updateMascotGuide();
   });
 });
 depositInput.addEventListener("input", updateCheckout);
@@ -135,3 +157,4 @@ document.querySelector(".dialog-close").addEventListener("click", () => paymentD
 document.querySelector("#dialogGuide").addEventListener("click", () => paymentDialog.close());
 paymentDialog.addEventListener("click", (event) => { if (event.target === paymentDialog) paymentDialog.close(); });
 updateCheckout();
+updateMascotGuide(false);

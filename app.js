@@ -30,7 +30,7 @@ const fullAmount = document.querySelector("#fullAmount");
 const depositField = document.querySelector("#depositField");
 const depositInput = document.querySelector('input[name="depositAmount"]');
 const weekField = document.querySelector("#weekField");
-const weekSelect = document.querySelector('select[name="weekChoice"]');
+const weekInputs = [...document.querySelectorAll('input[name="weekChoice"]')];
 const balanceText = document.querySelector("#balanceText");
 const checkoutButton = document.querySelector("#checkoutButton");
 const mascotGuide = document.querySelector(".payment-mascot-guide");
@@ -47,8 +47,10 @@ function updateCheckout() {
   depositInput.max = String(state.total - 10000);
   depositField.hidden = state.paymentMode !== "deposit";
   weekField.hidden = state.plan !== "1 semana";
-  weekSelect.disabled = state.plan !== "1 semana";
-  weekSelect.required = state.plan === "1 semana";
+  weekInputs.forEach((input) => {
+    input.disabled = state.plan !== "1 semana";
+    input.required = state.plan === "1 semana";
+  });
   balanceText.textContent = `Saldo pendiente: ${formatMoney(Math.max(state.total - amount, 0))} COP`;
   checkoutButton.textContent = state.paymentMode === "full" ? `Continuar al pago · ${formatMoney(state.total)}` : `Continuar con abono · ${formatMoney(amount)}`;
 }
@@ -155,7 +157,10 @@ const formError = document.querySelector("#formError");
 let wompiScriptPromise;
 
 function selectedWeekLabel() {
-  return weekSelect.options[weekSelect.selectedIndex]?.text || "";
+  const selectedWeek = weekInputs.find((input) => input.checked);
+  if (!selectedWeek) return "Semana por seleccionar";
+  const label = selectedWeek.closest("label");
+  return `${label.querySelector("b").textContent} · ${label.querySelector("small").textContent}`;
 }
 
 function paymentPayload() {
@@ -270,10 +275,11 @@ document.querySelector(".dialog-close").addEventListener("click", () => paymentD
 document.querySelector("#previewBack").addEventListener("click", () => paymentDialog.close());
 simulatePayment.addEventListener("click", () => {
   const payload = paymentPayload();
+  const previewMethod = document.querySelector('input[name="previewPaymentMethod"]:checked').value;
   wompiPreviewMain.hidden = true;
   wompiPreviewSuccess.hidden = false;
   testReference.textContent = `2MINDS-TEST-${Date.now().toString().slice(-6)}`;
-  dialogSummary.textContent = `${state.plan}: pago simulado de ${formatMoney(payload.amount)} COP${state.paymentMode === "deposit" ? ` y saldo de ${formatMoney(state.total - payload.amount)} COP` : ""}.`;
+  dialogSummary.textContent = `${state.plan}: pago simulado por ${previewMethod} de ${formatMoney(payload.amount)} COP${state.paymentMode === "deposit" ? ` y saldo de ${formatMoney(state.total - payload.amount)} COP` : ""}.`;
 });
 document.querySelector("#restartPreview").addEventListener("click", () => {
   wompiPreviewSuccess.hidden = true;

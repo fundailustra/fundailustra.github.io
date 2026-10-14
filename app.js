@@ -1,12 +1,19 @@
 const suppliedConfig = window.ILUSTRA_CONFIG || {};
 window.ILUSTRA_CONFIG = {
   faqVideoUrl: suppliedConfig.faqVideoUrl || "",
+  privacyPolicyVersion: suppliedConfig.privacyPolicyVersion || "",
+  merchant: {
+    legalName: "",
+    taxId: "",
+    ...(suppliedConfig.merchant || {})
+  },
   payment: {
     provider: "wompi",
     environment: "sandbox",
     enabled: false,
     publicKey: "",
     signatureEndpoint: "",
+    statusEndpoint: "",
     redirectUrl: `${window.location.origin}${window.location.pathname.replace(/[^/]*$/, "")}pago.html`,
     ...(suppliedConfig.payment || {})
   }
@@ -77,7 +84,7 @@ passButtons.forEach((button) => {
     passButtons.forEach((item) => {
       const active = item === button;
       item.classList.toggle("selected", active);
-      item.setAttribute("aria-checked", String(active));
+      item.setAttribute("aria-pressed", String(active));
     });
     state.plan = button.dataset.plan;
     state.total = Number(button.dataset.price);
@@ -154,6 +161,7 @@ const wompiPreviewSuccess = document.querySelector("#wompiPreviewSuccess");
 const simulatePayment = document.querySelector("#simulatePayment");
 const testReference = document.querySelector("#testReference");
 const formError = document.querySelector("#formError");
+const paymentNote = document.querySelector("#paymentNote");
 let wompiScriptPromise;
 
 function selectedWeekLabel() {
@@ -165,12 +173,22 @@ function selectedWeekLabel() {
 
 function paymentPayload() {
   const form = new FormData(checkoutForm);
+  const query = new URLSearchParams(window.location.search);
+  const campaignSource = query.get("utm_source") || (document.referrer ? new URL(document.referrer).hostname : "landing");
   return {
     plan: state.plan,
     week: state.plan === "1 semana" ? form.get("weekChoice") : "ambas-semanas",
     total: state.total,
     paymentMode: state.paymentMode,
     amount: paymentAmount(),
+    representativeConfirmed: form.get("adultConsent") === "on",
+    privacyPolicyVersion: window.ILUSTRA_CONFIG.privacyPolicyVersion || "",
+    source: campaignSource.slice(0, 120),
+    marketing: {
+      medium: String(query.get("utm_medium") || "").slice(0, 120),
+      campaign: String(query.get("utm_campaign") || "").slice(0, 120),
+      content: String(query.get("utm_content") || "").slice(0, 120)
+    },
     customer: {
       name: String(form.get("adultName") || "").trim(),
       email: String(form.get("email") || "").trim(),
@@ -203,16 +221,19 @@ async function openWompiSandbox(payload) {
   });
   if (!response.ok) throw new Error("No fue posible preparar la referencia de pago.");
   const order = await response.json();
-  if (!order.reference || !order.integrity) throw new Error("La respuesta de pago está incompleta.");
+  if (!order.reference || !order.integrity || !order.registrationId || !order.statusToken) throw new Error("La respuesta de pago está incompleta.");
   await loadWompiScript();
   const phoneDigits = payload.customer.phone.replace(/\D/g, "").replace(/^57/, "");
+  const redirectUrl = new URL(config.redirectUrl, window.location.href);
+  redirectUrl.searchParams.set("registration", order.registrationId);
+  redirectUrl.searchParams.set("token", order.statusToken);
   const checkout = new window.WidgetCheckout({
     currency: "COP",
     amountInCents: payload.amount * 100,
     reference: order.reference,
     publicKey: config.publicKey,
     signature: { integrity: order.integrity },
-    redirectUrl: config.redirectUrl,
+    redirectUrl: redirectUrl.toString(),
     customerData: {
       email: payload.customer.email,
       fullName: payload.customer.name,
@@ -220,7 +241,12 @@ async function openWompiSandbox(payload) {
       phoneNumberPrefix: "+57"
     }
   });
-  checkout.open(() => {});
+  checkout.open((result) => {
+    const transactionId = result?.transaction?.id;
+    if (!transactionId) return;
+    redirectUrl.searchParams.set("id", transactionId);
+    window.location.assign(redirectUrl.toString());
+  });
 }
 
 function openPaymentPreview(payload) {
@@ -286,5 +312,28 @@ document.querySelector("#restartPreview").addEventListener("click", () => {
   wompiPreviewMain.hidden = false;
 });
 paymentDialog.addEventListener("click", (event) => { if (event.target === paymentDialog) paymentDialog.close(); });
+
+document.querySelectorAll('a[href="#inscripcion"]').forEach((link) => {
+  link.addEventListener("click", () => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "payment_cta_click", course: "2MINDS Summit" });
+  });
+});
+
+const floatingCta = document.querySelector(".floating-cta");
+const registrationSection = document.querySelector("#inscripcion");
+if (floatingCta && registrationSection && "IntersectionObserver" in window) {
+  const formObserver = new IntersectionObserver(([entry]) => {
+    floatingCta.classList.toggle("is-hidden", entry.isIntersecting);
+  }, { threshold: 0.08 });
+  formObserver.observe(registrationSection);
+}
+
+if (!window.ILUSTRA_CONFIG.payment.enabled) {
+  paymentNote.textContent = "Vista de prueba: puedes recorrer todo el proceso sin realizar cargos. Al activar Wompi, el comprobante llegará al correo registrado.";
+} else if (window.ILUSTRA_CONFIG.merchant.legalName) {
+  const merchant = window.ILUSTRA_CONFIG.merchant;
+  paymentNote.textContent = `Pago seguro con Wompi. Recaudo realizado por ${merchant.legalName}${merchant.taxId ? ` · NIT ${merchant.taxId}` : ""}.`;
+}
 updateCheckout();
 updateMascotGuide(false);

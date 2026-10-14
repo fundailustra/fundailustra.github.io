@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Nunito+Sans:opsz,wght@6..12,700;6..12,800;6..12,900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261006-3">
+  <link rel="stylesheet" href="styles.css?v=20261014-1">
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -142,7 +142,7 @@
     <section class="pricing-section section" id="inscripcion">
       <div class="section-intro centered compact"><p class="kicker">Elige la experiencia</p><h2>Una semana o el summit completo</h2><p>El valor completo es la referencia principal. El abono desde $200.000 funciona como facilidad para asegurar el cupo y se descuenta del total.</p></div>
       <div class="checkout-layout">
-        <div class="passes" role="radiogroup" aria-label="Selecciona un pase">
+        <div class="passes" role="group" aria-label="Selecciona un pase">
           <div class="payment-mascot-guide mascot-reveal">
             <img src="assets/2minds-mascot-duo.png" alt="" width="1252" height="1252" loading="lazy">
             <div aria-live="polite">
@@ -151,9 +151,9 @@
               <p id="mascotGuideText">Las dos semanas están seleccionadas. Ahora elige cómo quieres pagar.</p>
             </div>
           </div>
-          <button class="pass-option" type="button" data-plan="1 semana" data-price="560000" aria-checked="false" role="radio"><span>PASE 1 SEMANA</span><strong>$560.000</strong><small>Semana 1 o semana 2 · 5 días</small><em>IVA incluido</em></button>
-          <button class="pass-option selected" type="button" data-plan="2 semanas" data-price="860000" aria-checked="true" role="radio"><span class="recommended">EXPERIENCIA COMPLETA</span><strong>$860.000</strong><small>Las dos semanas · 10 días distintos</small><em>IVA incluido · ahorras $260.000</em></button>
-          <aside class="crew-card"><b>Pase Crew</b><p>3 amigos inscritos juntos quedan en la misma crew y reciben una sesión de coaching grupal y un informe emocional por familia.</p></aside>
+          <button class="pass-option" type="button" data-plan="1 semana" data-price="560000" aria-pressed="false"><span>PASE 1 SEMANA</span><strong>$560.000</strong><small>Semana 1 o semana 2 · 5 días</small><em>IVA incluido</em></button>
+          <button class="pass-option selected" type="button" data-plan="2 semanas" data-price="860000" aria-pressed="true"><span class="recommended">EXPERIENCIA COMPLETA</span><strong>$860.000</strong><small>Las dos semanas · 10 días distintos</small><em>IVA incluido · ahorras $260.000</em></button>
+          <aside class="crew-card" aria-label="Beneficio Pase Crew"><b>Pase Crew</b><p>3 amigos inscritos juntos quedan en la misma crew y reciben una sesión de coaching grupal y un informe emocional por familia.</p></aside>
         </div>
         <form class="checkout-card" id="checkoutForm" novalidate>
           <div class="checkout-summary"><span>Tu selección</span><strong id="selectedPlan">2 semanas · $860.000 COP</strong></div>
@@ -168,13 +168,20 @@
             <label class="choice-card"><input type="radio" name="paymentMode" value="deposit"><span><b>Abonar para asegurar el cupo</b><small>El abono mínimo es de $200.000.</small></span></label>
           </fieldset>
           <label class="deposit-field" id="depositField" hidden>Monto que deseas abonar<input type="number" name="depositAmount" min="200000" step="10000" value="200000" inputmode="numeric"><small id="balanceText">Saldo pendiente: $660.000 COP</small></label>
-          <label>Nombre del adulto responsable<input type="text" name="adultName" autocomplete="name" required placeholder="Nombre completo"></label>
-          <label>Correo electrónico<input type="email" name="email" autocomplete="email" required placeholder="correo@ejemplo.com"></label>
-          <label>WhatsApp<input type="tel" name="phone" autocomplete="tel" required placeholder="+57 300 000 0000"></label>
-          <label>Edad del participante<select name="ageGroup" required><option value="">Selecciona un grupo</option><option value="11-13">11 a 13 años</option><option value="14-18">14 a 18 años</option></select></label>
-          <label class="consent-row"><input type="checkbox" name="adultConsent" required><span>Confirmo que soy padre, madre o representante legal y mayor de edad.</span></label>
+          <p class="fast-form-note"><strong>Datos del representante</strong><span>Los escribes una sola vez y llegarán prellenados a Wompi.</span></p>
+          <label>Nombre y apellido<input type="text" name="adultName" autocomplete="name" required minlength="3" maxlength="120" placeholder="Nombre del representante"></label>
+          <div class="contact-fields">
+            <label>WhatsApp<input type="tel" name="phone" autocomplete="tel" inputmode="tel" required minlength="10" maxlength="24" placeholder="300 000 0000"></label>
+            <label>Correo para el comprobante<input type="email" name="email" autocomplete="email" required maxlength="254" placeholder="correo@ejemplo.com"></label>
+          </div>
+          <fieldset class="age-choice">
+            <legend>Edad del joven</legend>
+            <label><input type="radio" name="ageGroup" value="11-13" required><span><b>11–13 años</b><small>Grupo inicial</small></span></label>
+            <label><input type="radio" name="ageGroup" value="14-18" required><span><b>14–18 años</b><small>Grupo avanzado</small></span></label>
+          </fieldset>
+          <label class="consent-row"><input type="checkbox" name="adultConsent" required><span>Confirmo que soy padre, madre o representante legal y autorizo el uso de estos datos para gestionar la inscripción y el pago de 2MINDS.</span></label>
           <button class="button checkout-button" type="submit" id="checkoutButton">Continuar al pago · $860.000</button>
-          <p class="payment-note">Antes de pagar verás nuevamente el pase y el valor. Esta versión abre una simulación segura de Wompi y no realiza cargos.</p><p class="form-error" id="formError" role="alert"></p>
+          <p class="payment-note" id="paymentNote">Antes de pagar verás nuevamente el pase y el valor. El comprobante llegará al correo registrado.</p><p class="form-error" id="formError" role="alert"></p>
         </form>
       </div>
     </section>
@@ -194,14 +201,14 @@
 
   <footer class="site-footer">
     <div class="footer-alliance"><strong>Fundación SOKA</strong><span>×</span><img src="assets/ilustra-logo-horizontal.png" alt="Fundación ILUSTRA"></div>
-    <p>Fundación ILUSTRA · NIT 901.664.266-1<br><a href="mailto:contacto@fundacionilustra.com">contacto@fundacionilustra.com</a> · <a href="tel:+573172578495">+57 317 257 8495</a></p>
+    <p>Fundación ILUSTRA · NIT 901.664.266-1<br><a href="mailto:contacto@fundacionilustra.com">contacto@fundacionilustra.com</a> · <a href="tel:+573172578495">+57&nbsp;317&nbsp;257&nbsp;8495</a></p>
   </footer>
   <a class="floating-cta" href="#inscripcion">Inscribir ahora</a>
   <dialog class="payment-dialog wompi-preview" id="paymentDialog" aria-labelledby="dialogTitle">
     <button class="dialog-close" type="button" aria-label="Cerrar">×</button>
     <div class="wompi-preview-main" id="wompiPreviewMain">
       <div class="wompi-preview-head"><span class="sandbox-badge">MODO PRUEBA</span><strong>Pago seguro con <b>Wompi</b></strong></div>
-      <div class="checkout-progress" aria-label="Paso 2 de 3"><span class="done">1</span><i></i><span class="active">2</span><i></i><span>3</span></div>
+      <div class="checkout-progress" role="img" aria-label="Paso 2 de 3"><span class="done">1</span><i></i><span class="active">2</span><i></i><span>3</span></div>
       <p class="preview-step">DATOS LISTOS · REVISA ANTES DE CONTINUAR</p>
       <h2 id="dialogTitle">Confirma tu inscripción</h2>
       <div class="preview-order"><span id="dialogPlan">Experiencia completa</span><strong id="dialogAmount">$860.000 COP</strong><small id="dialogBalance">Pago total · sin saldo pendiente</small></div>
@@ -220,11 +227,11 @@
       <span class="success-check">✓</span><p class="preview-step">RESULTADO DE LA SIMULACIÓN</p><h2>Pago aprobado</h2>
       <p id="dialogSummary">Tu inscripción de prueba quedó registrada.</p>
       <div class="test-reference"><span>Referencia de prueba</span><strong id="testReference">2MINDS-TEST</strong></div>
-      <p><strong>En la integración real, la confirmación llegará únicamente después de que el servidor reciba y valide el evento de Wompi.</strong></p>
+      <p><strong>En la integración real, Wompi enviará el comprobante al correo y el servidor actualizará el mismo registro en Supabase y Google Sheets.</strong></p>
       <button class="button" type="button" id="restartPreview">Hacer otra prueba</button>
     </div>
   </dialog>
-  <script src="payment-config.js?v=20261006-3"></script>
-  <script src="app.js?v=20261006-3"></script>
+  <script src="payment-config.js?v=20261014-1"></script>
+  <script src="app.js?v=20261014-1"></script>
 </body>
 </html>

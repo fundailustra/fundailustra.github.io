@@ -2,8 +2,8 @@ window.ILUSTRA_CONFIG = {
   faqVideoUrl: "",
   privacyPolicyVersion: "",
   merchant: {
-    legalName: "",
-    taxId: ""
+    legalName: "SERVICIOS JURIDICOS GLOBALES S.A.S.",
+    taxId: "901361847-8"
   },
   payment: {
     provider: "wompi",

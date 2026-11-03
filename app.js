@@ -113,7 +113,7 @@ document.querySelectorAll(".faq-list details").forEach((item) => {
 const guideSlides = [
   ["¿Necesita saber de tecnología?", "No. Se aprende haciendo, desde cero y en equipo."],
   ["¿Las semanas son iguales?", "No. Cada semana tiene una programación distinta; se puede vivir una o las dos."],
-  ["¿El reto de hielo es obligatorio?", "No. Es voluntario, adaptado por edad y requiere autorización y formulario de salud."],
+  ["¿Está incluida la piscina?", "No. La sede incluye salón, Internet y zona verde; no incluye piscina."],
   ["¿Cómo se paga?", "El valor completo aparece primero. También se puede asegurar el cupo con un abono desde $200.000."]
 ];
 const guidePlay = document.querySelector("#guidePlay");
@@ -305,7 +305,7 @@ simulatePayment.addEventListener("click", () => {
   wompiPreviewMain.hidden = true;
   wompiPreviewSuccess.hidden = false;
   testReference.textContent = `2MINDS-TEST-${Date.now().toString().slice(-6)}`;
-  dialogSummary.textContent = `${state.plan}: pago simulado por ${previewMethod} de ${formatMoney(payload.amount)} COP${state.paymentMode === "deposit" ? ` y saldo de ${formatMoney(state.total - payload.amount)} COP` : ""}.`;
+  dialogSummary.textContent = `${state.plan}: simulación por ${previewMethod} de ${formatMoney(payload.amount)} COP${state.paymentMode === "deposit" ? ` y saldo estimado de ${formatMoney(state.total - payload.amount)} COP` : ""}. No se realizó ningún cobro ni se guardó una inscripción.`;
 });
 document.querySelector("#restartPreview").addEventListener("click", () => {
   wompiPreviewSuccess.hidden = true;
@@ -330,7 +330,7 @@ if (floatingCta && registrationSection && "IntersectionObserver" in window) {
 }
 
 if (!window.ILUSTRA_CONFIG.payment.enabled) {
-  paymentNote.textContent = "Vista de prueba: puedes recorrer todo el proceso sin realizar cargos. Al activar Wompi, el comprobante llegará al correo registrado.";
+  paymentNote.textContent = "Vista de prueba: puedes recorrer todo el proceso sin realizar cargos. Los pagos aún no están habilitados.";
 } else if (window.ILUSTRA_CONFIG.merchant.legalName) {
   const merchant = window.ILUSTRA_CONFIG.merchant;
   paymentNote.textContent = `Pago seguro con Wompi. Recaudo realizado por ${merchant.legalName}${merchant.taxId ? ` · NIT ${merchant.taxId}` : ""}.`;

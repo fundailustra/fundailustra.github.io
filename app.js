@@ -113,7 +113,7 @@ document.querySelectorAll(".faq-list details").forEach((item) => {
 const guideSlides = [
   ["¿Necesita saber de tecnología?", "No. Se aprende haciendo, desde cero y en equipo."],
   ["¿Las semanas son iguales?", "No. Cada semana tiene una programación distinta; se puede vivir una o las dos."],
-  ["¿Está incluida la piscina?", "No. La sede incluye salón, Internet y zona verde; no incluye piscina."],
+  ["¿Cuándo se realiza?", "Del 30 de noviembre al 11 de diciembre, sin actividades el 8 de diciembre."],
   ["¿Cómo se paga?", "El valor completo aparece primero. También se puede asegurar el cupo con un abono desde $200.000."]
 ];
 const guidePlay = document.querySelector("#guidePlay");

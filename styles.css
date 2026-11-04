@@ -112,3 +112,44 @@ html { scroll-padding-top: 100px; }
     height: 54px;
   }
 }
+/* WhatsApp flotante compacto y sin obstrucciones */
+.whatsapp-floating {
+  position: fixed !important;
+  left: 16px !important;
+  right: auto !important;
+  bottom: 18px !important;
+  z-index: 65 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  padding: 0 !important;
+  border: 1px solid white !important;
+  border-radius: 50% !important;
+  background: #25D366 !important;
+  color: white !important;
+  box-shadow: 0 3px 10px rgba(0,0,0,.18) !important;
+  text-decoration: none !important;
+  overflow: hidden !important;
+}
+
+.whatsapp-floating svg {
+  display: block !important;
+  width: 23px !important;
+  height: 23px !important;
+  max-width: 23px !important;
+  max-height: 23px !important;
+  flex: 0 0 23px !important;
+}
+
+@media (max-width: 620px) {
+  .whatsapp-floating {
+    left: 12px !important;
+    bottom: 82px !important;
+  }
+}

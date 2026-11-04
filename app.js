@@ -150,6 +150,29 @@ guidePlay.addEventListener("click", () => {
 });
 
 const checkoutForm = document.querySelector("#checkoutForm");
+// La pagina normal conserva la simulacion. Solo el enlace de prueba abre Sandbox.
+const sandboxTest = window.ILUSTRA_CONFIG.payment.environment === "sandbox" &&
+  new URLSearchParams(window.location.search).get("prueba-wompi") === "1";
+const turnstileCheck = document.querySelector("#turnstileCheck");
+let turnstileWidgetId = null;
+if (sandboxTest && turnstileCheck) {
+  turnstileCheck.hidden = false;
+  const turnstileScript = document.createElement("script");
+  turnstileScript.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+  turnstileScript.async = true;
+  turnstileScript.onload = () => {
+    try {
+      turnstileWidgetId = window.turnstile.render(turnstileCheck, {
+        sitekey: turnstileCheck.dataset.sitekey,
+        action: "2minds_checkout",
+        theme: "light"
+      });
+    } catch (error) {
+      console.error("No fue posible mostrar Turnstile", error);
+    }
+  };
+  document.head.appendChild(turnstileScript);
+}
 const paymentDialog = document.querySelector("#paymentDialog");
 const dialogSummary = document.querySelector("#dialogSummary");
 const dialogPlan = document.querySelector("#dialogPlan");
@@ -278,10 +301,20 @@ checkoutForm.addEventListener("submit", async (event) => {
   }
   const payload = paymentPayload();
   const paymentConfig = window.ILUSTRA_CONFIG.payment;
-  if (!paymentConfig.enabled || !paymentConfig.publicKey || !paymentConfig.signatureEndpoint) {
+  if (!sandboxTest || !paymentConfig.publicKey || !paymentConfig.signatureEndpoint) {
     openPaymentPreview(payload);
     return;
   }
+  if (!window.turnstile || turnstileWidgetId === null) {
+    formError.textContent = "La verificacion de seguridad aun no esta disponible. Recarga la pagina e intenta nuevamente.";
+    return;
+  }
+  const token = window.turnstile.getResponse(turnstileWidgetId);
+  if (typeof token !== "string" || token.length < 10) {
+    formError.textContent = "Completa la verificacion de seguridad antes de continuar.";
+    return;
+  }
+  payload.turnstileToken = token;
   checkoutButton.disabled = true;
   checkoutButton.setAttribute("aria-busy", "true");
   const originalText = checkoutButton.textContent;
@@ -291,6 +324,9 @@ checkoutForm.addEventListener("submit", async (event) => {
   } catch (error) {
     formError.textContent = `${error.message} Intenta nuevamente o comunícate por WhatsApp.`;
   } finally {
+    if (window.turnstile && turnstileWidgetId !== null) {
+      window.turnstile.reset(turnstileWidgetId);
+    }
     checkoutButton.disabled = false;
     checkoutButton.removeAttribute("aria-busy");
     checkoutButton.textContent = originalText;
@@ -352,7 +388,9 @@ if (floatingCta && registrationSection && "IntersectionObserver" in window) {
   formObserver.observe(registrationSection);
 }
 
-if (!window.ILUSTRA_CONFIG.payment.enabled) {
+if (sandboxTest) {
+  paymentNote.textContent = "MODO PRUEBA: Wompi Sandbox. No se realizan cargos reales.";
+} else if (!window.ILUSTRA_CONFIG.payment.enabled) {
   paymentNote.textContent = "Vista de prueba: puedes recorrer todo el proceso sin realizar cargos. Los pagos aún no están habilitados.";
 } else if (window.ILUSTRA_CONFIG.merchant.legalName) {
   const merchant = window.ILUSTRA_CONFIG.merchant;

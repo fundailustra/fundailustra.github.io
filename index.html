@@ -163,6 +163,7 @@
             <label><input type="radio" name="ageGroup" value="14-18" required><span><b>14–18 años</b><small>Grupo avanzado</small></span></label>
           </fieldset>
           <label class="consent-row"><input type="checkbox" name="adultConsent" required><span>Confirmo que soy padre, madre o representante legal y autorizo el uso de estos datos para gestionar la inscripción y el pago de 2MINDS.</span></label>
+          <div id="turnstileCheck" data-sitekey="0x4AAAAAAFy4NwmsnRRp6Yk4" hidden style="margin:12px 0;"></div>
           <button class="button checkout-button" type="submit" id="checkoutButton">Continuar al pago · $860.000</button>
           <p class="payment-note" id="paymentNote">Vista de prueba: no se realizan cobros.</p><p class="payment-note">Entidad prevista para recaudar: SERVICIOS JURIDICOS GLOBALES S.A.S. · NIT 901361847-8. El curso es organizado por Fundación ILUSTRA; la habilitación del recaudo entre ambas entidades debe verificarse antes de aceptar pagos.</p><p class="form-error" id="formError" role="alert"></p>
         </form>
@@ -224,7 +225,7 @@
       <button class="button" type="button" id="restartPreview">Hacer otra prueba</button>
     </div>
   </dialog>
-  <script src="payment-config.js?v=20261014-1"></script>
-  <script src="app.js?v=20261014-1"></script>
+  <script src="payment-config.js?v=20261104-turnstile2"></script>
+  <script src="app.js?v=20261104-turnstile2"></script>
 </body>
 </html>

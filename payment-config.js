@@ -10,7 +10,7 @@ window.ILUSTRA_CONFIG = {
     environment: "sandbox",
     enabled: false,
     publicKey: "pub_test_puwlDtEfEnpzbzVcPVutWC8WXgBfJZRB",
-    signatureEndpoint: "https://jzkznnwsqzvbxxwxztgb.supabase.co/functions/v1/create-wompi-test-order",
+    signatureEndpoint: "https://jzkznnwsqzvbxxwxztgb.supabase.co/functions/v1/create-wompi-public-test-order",
     statusEndpoint: "https://jzkznnwsqzvbxxwxztgb.supabase.co/functions/v1/get-wompi-test-status",
     redirectUrl: "https://fundailustra.github.io/pago.html"
   }

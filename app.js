@@ -313,15 +313,38 @@ document.querySelector("#restartPreview").addEventListener("click", () => {
 });
 paymentDialog.addEventListener("click", (event) => { if (event.target === paymentDialog) paymentDialog.close(); });
 
-document.querySelectorAll('a[href="#inscripcion"]').forEach((link) => {
-  link.addEventListener("click", () => {
+document.querySelectorAll('a[href="#checkoutForm"]').forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const form = document.querySelector("#checkoutForm");
+    if (!form) return;
+
+    event.preventDefault();
+
+    const header = document.querySelector(".site-header");
+    const altoHeader = header ? header.getBoundingClientRect().height : 76;
+    const posicion = Math.max(
+      0,
+      window.scrollY + form.getBoundingClientRect().top - altoHeader - 16
+    );
+
+    const reducirMovimiento = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    window.scrollTo({
+      top: posicion,
+      behavior: reducirMovimiento ? "auto" : "smooth"
+    });
+
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({ event: "payment_cta_click", course: "2MINDS Summit" });
+    window.dataLayer.push({
+      event: "payment_cta_click",
+      course: "2MINDS Summit"
+    });
   });
 });
-
 const floatingCta = document.querySelector(".floating-cta");
-const registrationSection = document.querySelector("#inscripcion");
+const registrationSection = document.querySelector("#checkoutForm");
 if (floatingCta && registrationSection && "IntersectionObserver" in window) {
   const formObserver = new IntersectionObserver(([entry]) => {
     floatingCta.classList.toggle("is-hidden", entry.isIntersecting);

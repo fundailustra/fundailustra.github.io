@@ -24,3 +24,44 @@
 @media(max-width:620px){.site-header{min-height:68px;padding:10px 15px}.header-cta{display:none}.hero{padding:54px 18px 74px}h1{font-size:clamp(3.2rem,17vw,4.7rem)}.hero-actions{display:grid}.hero-actions .button{width:100%}.hero-mascot-stage{min-height:535px;padding:18px 16px;border-radius:24px;box-shadow:8px 8px 0 var(--ink)}.hero-mascot-stage:before{width:300px;height:300px;right:-72px;top:70px}.hero-mascot-stage:after{width:120px;height:120px;left:-55px;bottom:145px}.mascot-bubble{top:17px;left:15px;padding:9px 11px}.mascot-bubble strong{font-size:.82rem}.hero-mascot{width:108%;max-width:none;margin:48px -4% 0}.mascot-facts{grid-template-columns:1fr 1fr;margin-top:-18px}.mascot-facts div{padding:9px 12px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink)}.mascot-facts div:nth-child(even){border-right:0}.mascot-facts div:nth-last-child(-n+2){border-bottom:0}.mascot-place{font-size:.67rem}.quick-strip{gap:8px 13px}.quick-strip i{font-size:1rem}.section{padding:68px 18px}.section h2{font-size:2.6rem}.promise-grid,.format-grid,.audience-grid{grid-template-columns:1fr}.promise-grid article{min-height:210px;border-right:0;border-bottom:2px solid var(--ink)}.promise-grid article:last-child{border-bottom:0}.format-grid article{min-height:230px}.format-grid h3{margin-top:42px}.week-head{align-items:flex-start;flex-direction:column}.week-head strong{text-align:left}.week-card li{grid-template-columns:1fr;gap:5px}.safety-list div{grid-template-columns:1fr;gap:4px}.leader-section{padding-right:26px}.leader-photo:before{inset:10px -10px -10px 10px}.audience-grid article{min-height:290px}.audience-grid article:last-child{border-left:0;border-top:3px solid var(--ink)}.audience-grid h3{margin-top:35px}.video-shell,.faq-video,.guide-screen{min-height:390px}.details-grid{grid-template-columns:1fr}.details-grid div:nth-child(odd){padding-right:0}.checkout-layout{box-shadow:8px 8px 0 var(--orange)}.passes,.checkout-card{padding:24px 19px}.payment-mascot-guide{grid-template-columns:82px 1fr;padding:12px 11px 12px 1px}.payment-mascot-guide img{width:94px;margin:-10px 0 -18px -7px}.payment-mascot-guide strong{font-size:1rem}.pass-option>strong{font-size:2.05rem}.choice-card{grid-template-columns:18px 1fr!important}.choice-card>strong{grid-column:2}.human-help,.site-footer{align-items:stretch;flex-direction:column}.human-help .button{width:100%}.site-footer{padding-bottom:98px}.site-footer p{text-align:left}.footer-alliance{flex-wrap:wrap}.floating-cta{left:13px;right:13px;bottom:12px}.payment-dialog{padding:37px 23px 27px}}
 @media(max-width:620px){.wompi-preview{padding:0}.wompi-preview-main,.wompi-preview-success{padding:28px 20px}.wompi-preview-head{align-items:flex-start;flex-direction:column;gap:9px}.preview-order strong{font-size:1.7rem}.week-choice,.payment-methods,.contact-fields,.age-choice,.result-payment-summary{grid-template-columns:1fr}.wompi-preview .dialog-close{top:12px;right:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+/* 2MINDS FORMULARIO CENTRADO */
+html { scroll-padding-top: 100px; }
+#checkoutForm, #planes { scroll-margin-top: 100px; }
+
+.checkout-layout {
+  max-width: 860px;
+  grid-template-columns: minmax(0, 1fr);
+  overflow: clip;
+}
+
+.passes {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.payment-mascot-guide, .crew-card {
+  grid-column: 1 / -1;
+}
+
+.checkout-card {
+  width: 100%;
+  max-width: 740px;
+  justify-self: center;
+}
+
+.change-plan-link {
+  display: inline-block;
+  margin-top: 6px;
+  color: var(--green-dark);
+  font-size: .82rem;
+  font-weight: 900;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 620px) {
+  html { scroll-padding-top: 82px; }
+  #checkoutForm, #planes { scroll-margin-top: 82px; }
+  .passes { grid-template-columns: 1fr; }
+  .payment-mascot-guide, .crew-card { grid-column: auto; }
+  .checkout-card { max-width: 100%; }
+}

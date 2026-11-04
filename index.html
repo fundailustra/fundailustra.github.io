@@ -23,7 +23,7 @@
   <header class="site-header">
     <a class="brand" href="#inicio" aria-label="2MINDS Summit, volver al inicio"><span class="brand-two">2</span><span>MINDS</span><small>Piensa · Siente · Crea</small></a>
     <div class="header-detail">30 nov. — 11 dic. · Eventos Paraíso</div>
-    <a class="header-cta" href="#inscripcion">Inscribir ahora</a>
+    <a class="header-cta" href="#checkoutForm">Inscribir ahora</a>
   </header>
 
   <main id="contenido">
@@ -33,7 +33,7 @@
         <h1>Dos mentes.<br><span>Una sola persona.</span></h1>
         <p class="hero-hook">La IA puede hacerlo casi todo. <strong>Aquí descubres qué haces tú.</strong></p>
         <p class="hero-lead">Una o dos semanas para crear comunidad, aprender nuevas tecnologías, conocerte y hacer tu upgrade.</p>
-        <div class="hero-actions"><a class="button" href="#inscripcion">Inscribir ahora</a><a class="text-link" href="#video-faq">Resolver dudas en video</a></div>
+        <div class="hero-actions"><a class="button" href="#checkoutForm">Inscribir ahora</a><a class="text-link" href="#video-faq">Resolver dudas en video</a></div>
         <p class="adult-note">La inscripción y el pago los realiza únicamente el padre, madre o representante legal.</p>
       </div>
       <aside class="hero-mascot-stage" aria-label="DÚO, mascota de 2MINDS Summit e información principal del evento">
@@ -125,7 +125,7 @@
     <section class="pricing-section section" id="inscripcion">
       <div class="section-intro centered compact"><p class="kicker">Elige la experiencia</p><h2>Una semana o el summit completo</h2><p>El valor completo es la referencia principal. El abono desde $200.000 funciona como facilidad para asegurar el cupo y se descuenta del total.</p></div>
       <div class="checkout-layout">
-        <div class="passes" role="group" aria-label="Selecciona un pase">
+        <div class="passes" id="planes" role="group" aria-label="Selecciona un pase">
           <div class="payment-mascot-guide mascot-reveal">
             <img src="assets/2minds-mascot-duo.png" alt="" width="1252" height="1252" loading="lazy">
             <div aria-live="polite">
@@ -139,7 +139,7 @@
           <aside class="crew-card" aria-label="Beneficio Pase Amigos"><b>Pase Amigos</b><p>3 amigos inscritos juntos quedan en el mismo equipo y reciben una sesión de coaching grupal y un informe emocional por familia.</p></aside>
         </div>
         <form class="checkout-card" id="checkoutForm" novalidate>
-          <div class="checkout-summary"><span>Tu selección</span><strong id="selectedPlan">2 semanas · $860.000 COP</strong></div>
+          <div class="checkout-summary"><span>Tu selección</span><strong id="selectedPlan">2 semanas · $860.000 COP</strong><a class="change-plan-link" href="#planes">Cambiar plan</a></div>
           <fieldset class="week-choice" id="weekField" hidden>
             <legend>¿Qué semana deseas reservar?</legend>
             <label><input type="radio" name="weekChoice" value="semana-1" disabled><span><b>Semana 1</b><small>30 de noviembre al 4 de diciembre (5 días)</small></span></label>
@@ -186,7 +186,7 @@
     <div class="footer-alliance"><img src="assets/ilustra-logo-horizontal.png" alt="Fundación ILUSTRA"></div>
     <p>Fundación ILUSTRA · Bucaramanga, Colombia<br><a href="mailto:contacto@fundacionilustra.com">contacto@fundacionilustra.com</a> · <a href="https://wa.me/573052591372?text=Hola%2C%20quiero%20informacion%20sobre%202MINDS%20Summit" target="_blank" rel="noopener">WhatsApp: 305&nbsp;259&nbsp;1372</a></p>
   </footer>
-  <a class="floating-cta" href="#inscripcion">Inscribir ahora</a>
+  <a class="floating-cta" href="#checkoutForm">Inscribir ahora</a>
   <dialog class="payment-dialog wompi-preview" id="paymentDialog" aria-labelledby="dialogTitle">
     <button class="dialog-close" type="button" aria-label="Cerrar">×</button>
     <div class="wompi-preview-main" id="wompiPreviewMain">

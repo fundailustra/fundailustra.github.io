@@ -65,3 +65,50 @@ html { scroll-padding-top: 100px; }
   .payment-mascot-guide, .crew-card { grid-column: auto; }
   .checkout-card { max-width: 100%; }
 }
+
+/* Preguntas frecuentes y WhatsApp flotante */
+.video-section[hidden] { display: none !important; }
+#preguntas { scroll-margin-top: 100px; }
+
+.whatsapp-floating {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 75;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #25D366;
+  color: white;
+  border: 2px solid white;
+  box-shadow: 0 4px 16px rgba(0,0,0,.25);
+  transition: transform .2s ease;
+}
+
+.whatsapp-floating:hover {
+  transform: scale(1.08);
+}
+
+.whatsapp-floating:focus-visible {
+  outline: 3px solid #111;
+  outline-offset: 3px;
+}
+
+.whatsapp-floating svg {
+  width: 34px;
+  height: 34px;
+}
+
+@media (max-width: 620px) {
+  #preguntas { scroll-margin-top: 82px; }
+
+  .whatsapp-floating {
+    left: 16px;
+    bottom: 82px;
+    width: 54px;
+    height: 54px;
+  }
+}
